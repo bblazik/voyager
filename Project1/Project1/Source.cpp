@@ -16,10 +16,17 @@ void TestMatrix(int s, int **matrix) {
 
 int main() {
 
+	const int MembersAmount = 10;
+
 	cLoader load;
 	Population pop;
-
+	
 	pop.fRefMatrix = load.mLoadMatrix();
+	pop.mInitializeMembers();
+	pop.fPopSize = MembersAmount;
+
+	
+
 	//TestMatrix(4, pop.fRefMatrix);
 	//load.mLoadMatrix();
 	system("pause");

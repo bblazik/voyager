@@ -9,22 +9,26 @@ class cLoader
 public:
 	cLoader();
 	~cLoader();
+	int size;
 
 	int** mLoadMatrix() {
 		std::fstream myfile("D:\\Matrix.txt", std::ios_base::in);
 		if (myfile.is_open()) {
-			int a = 0;
-			myfile >> a;
+			
+			myfile >> size;
 
-			int** ary = new int*[a];
-			for (int i = 0; i < a; ++i)
-				ary[i] = new int[a];
+			int** ary = new int*[size];
+			for (int i = 0; i < size; ++i)
+				ary[i] = new int[size];
 
-			for (int i = 0; i < a; i++)
-				for (int j = 0; j < a; j++)
-				{
+			for (int i = 0; i < size; i++)
+				for (int j = 0; j < size; j++)
+				{	
 					myfile >> ary[i][j];
-					//cout << ary[i][j]<< endl;
+					if(ary[i][j] == 0)
+						ary[i][j] = numeric_limits<int>::infinity();
+					
+					//@TEST cout << ary[i][j]<< endl;
 				}
 
 			return ary;

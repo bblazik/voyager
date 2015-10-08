@@ -8,6 +8,7 @@ class cMember
 {
 public:
 	cMember();
+	cMember(int tId);
 	~cMember(); 
 
 	int fId;

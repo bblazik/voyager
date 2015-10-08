@@ -118,12 +118,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="cGA.cpp" />
     <ClCompile Include="cLoader.cpp" />
     <ClCompile Include="cMember.cpp" />
     <ClCompile Include="Population.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cGA.h" />
     <ClInclude Include="cLoader.h" />
     <ClInclude Include="cMember.h" />
     <ClInclude Include="Population.h" />
