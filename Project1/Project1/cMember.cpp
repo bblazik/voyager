@@ -6,9 +6,15 @@ cMember::cMember()
 {
 }
 
-cMember::cMember(int tId)
+cMember::cMember(int tId, int s)
 {
 	fId = tId;
+
+	for (int i = 0; i < s; i++)
+		fOrder.push_back(0);
+	
+		
+
 }
 
 
