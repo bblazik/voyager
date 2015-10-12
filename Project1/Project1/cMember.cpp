@@ -12,8 +12,7 @@ cMember::cMember(int tId, int s)
 
 	for (int i = 0; i < s; i++)
 		fOrder.push_back(0);
-	
-		
+	fLengeth = 0;
 
 }
 

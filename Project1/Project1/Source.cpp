@@ -15,26 +15,26 @@ void TestMatrix(int s, int **matrix) {
 	}
 }
 
-void TestOrder(vector<cMember> v) {
+void TestOrder(vector<cMember*> *v) {
 
-	for each (cMember m in v) {
-		for each(int i in m.fOrder) {
+	for each (cMember* m in *v) {
+		for each(int i in m->fOrder) {
 			cout << i << " ";
 		}
 		cout << endl;
 	}
 }
 
-void TestPopulation(vector<cMember> v){
-	for (int i = 0; i < v.size(); i++) {
-		cout << v[i].fId;
+void TestPopulation(vector<cMember*> *v){
+	for (int i = 0; i < v->size(); i++) {
+		cout << v->at(i)->fId;
 	}
 }
 
 
 int main() {
 
-	const int MembersAmount = 10;
+	const int MembersAmount = 2;
 
 	cLoader load;
 	Population pop;
@@ -51,13 +51,12 @@ int main() {
 
 	//Inicjacja Osobników
 	pop.mInitializeMembers();
-	//@TEST OK TestPopulation(pop.fPopulation);
-	
-	
+	pop.mDrawMembers();
+//	pop.mChoseBestMember();
+	///*@TEST OK*/ TestPopulation(&pop.fPopulation);
+	/*@Test OK*/ TestOrder(&pop.fPopulation); 
 
-	//TestOrder(pop.fPopulation);
-
-	
+	pop.mPrintMembers();
 
 	
 	//load.mLoadMatrix();
