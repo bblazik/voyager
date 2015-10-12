@@ -118,7 +118,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="cGA.cpp" />
     <ClCompile Include="cLoader.cpp" />
     <ClCompile Include="cMember.cpp" />
     <ClCompile Include="Population.cpp" />

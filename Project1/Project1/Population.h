@@ -3,6 +3,10 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 #include <vector>
+#include <algorithm>
+
+
+
 
 class Population
 {
@@ -34,7 +38,8 @@ public:
 				OrderFlag[val] = false;	
 			}
 			OrderFlag = setFlag(OrderFlag, true);
-			mSumLength(*&m);
+			//mSumLength(*&m);
+			m->mSumLength(fRefMatrix);
 			//cout << m.fLengeth<<endl;
 			//cout<<"iii: "<< OrderFlag[0] << endl;
 		}
@@ -54,15 +59,10 @@ public:
 		}
 	}
 
-	void mSumLength(cMember *m) {
-		for (int i = 0; i < m->fOrder.size() -1 ; i++) {
-			m->fLengeth += *fRefMatrix[m->fOrder[i], m->fOrder[i + 1]];
-			//cout << "length: " << *fRefMatrix[m.fOrder[i], m.fOrder[i + 1]] << endl;
-		}
-		//cout << m->fLengeth << endl;
-	}
+
 
 	void mPrintMembers() {
+		cout << "\n\n -------------Wypisuje wszystkich: -----------\n";
 		for each (cMember * m in fPopulation){
 			cout << m->fLengeth << endl;
 		}
@@ -78,12 +78,23 @@ public:
 		for (int i = 0; i < fRefMatrixSize; i++) {
 			OrderFlag.push_back(true);
 		}
-		//mDrawMembers();
-		//mChoseBestMember();
+		mDrawMembers();
+		mChoseBestMember();
+
+		
 		//mPrintMembers();
 		//@TEST cout << fPopulation.size();
 	}
+	
+	void mRemoveHalf() {
+		for (int i = fPopSize / 2; i < fPopSize; i++)
+			fPopulation.pop_back();
+	}
 
-
+	void mAddNew() {
+		for (int i = fPopSize/2; i < fPopSize; i++) {
+			fPopulation.push_back(new cMember(i, fRefMatrixSize));
+		}
+	}
 };
 

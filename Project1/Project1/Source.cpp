@@ -3,8 +3,11 @@
 #include "Population.h"
 #include <iostream>
 #include "cLoader.h"
+#include "cGA.h"
 
 using namespace std;
+
+bool fCompare(cMember* i, cMember* j) { return (i->fLengeth < j->fLengeth); }
 
 void TestMatrix(int s, int **matrix) {
 
@@ -34,11 +37,14 @@ void TestPopulation(vector<cMember*> *v){
 
 int main() {
 
-	const int MembersAmount = 2;
+	const int MembersAmount = 5;
+	const int MutationRate = 10;
+	const int CrossingRate = 75;
+	const int NumberOfCycle = 10;
 
 	cLoader load;
 	Population pop;
-	
+	cGA ga(CrossingRate, MutationRate);
 
 	//Wype³niamy Tablice referencji
 	pop.fRefMatrix = load.mLoadMatrix();
@@ -51,15 +57,23 @@ int main() {
 
 	//Inicjacja Osobników
 	pop.mInitializeMembers();
-	pop.mDrawMembers();
-//	pop.mChoseBestMember();
+	sort(pop.fPopulation.begin(), pop.fPopulation.end(), fCompare);
+		
 	///*@TEST OK*/ TestPopulation(&pop.fPopulation);
-	/*@Test OK*/ TestOrder(&pop.fPopulation); 
+	///*@Test OK*/ TestOrder(&pop.fPopulation); 
+	
 
 	pop.mPrintMembers();
-
+	
+	for (int i = 0; i < NumberOfCycle; i++) {
+		ga.selection(&pop);
+		ga.crossing(&pop);
+		pop.mPrintMembers();
+	}
 	
 	//load.mLoadMatrix();
 	system("pause");
 }
+
+
 
