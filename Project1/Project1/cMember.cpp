@@ -15,6 +15,10 @@ cMember::cMember(int tId, int s)
 		fOrder.push_back(0);
 	fLengeth = 0;
 
+	for (int i = 0; i < s; i++)
+		OrderPosibilities.push_back(i);
+	
+
 }
 
 

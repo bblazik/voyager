@@ -71,11 +71,6 @@ public:
 			fPopulation.push_back(new cMember(i, fRefMatrixSize));
 			
 		}
-		for each (cMember *m in fPopulation){
-			for (int i = 0; i < fRefMatrixSize; i++) 
-				m->OrderPosibilities.push_back(i);
-		}
-		
 
 		mDrawMembers();
 		mChoseBestMember();

@@ -37,7 +37,7 @@ void TestPopulation(vector<cMember*> *v){
 
 int main() {
 
-	const int MembersAmount = 10;
+	const int MembersAmount = 12;
 	const int MutationRate = 10;
 	const int CrossingRate = 75;
 	const int NumberOfCycle = 10;
@@ -65,11 +65,15 @@ int main() {
 
 	pop.mPrintMembers();
 	
-	//for (int i = 0; i < NumberOfCycle; i++) {
-		//ga.selection(&pop);
-		//ga.crossing(&pop);
-		//pop.mPrintMembers();
-	//}
+	for (int i = 0; i < NumberOfCycle; i++) {
+		ga.selection(&pop);
+		ga.crossing(&pop);
+		ga.mutation(&pop);
+		ga.graduation(&pop);
+		sort(pop.fPopulation.begin(), pop.fPopulation.end(), fCompare);
+
+		pop.mPrintMembers();
+	}
 	
 	//load.mLoadMatrix();
 	system("pause");
