@@ -37,7 +37,7 @@ void TestPopulation(vector<cMember*> *v){
 
 int main() {
 
-	const int MembersAmount = 5;
+	const int MembersAmount = 10;
 	const int MutationRate = 10;
 	const int CrossingRate = 75;
 	const int NumberOfCycle = 10;
@@ -53,23 +53,23 @@ int main() {
 	pop.fPopSize = MembersAmount;
 	pop.fRefMatrixSize = load.size;
 
-	//@TEST OK TestMatrix(pop.fRefMatrixSize, pop.fRefMatrix);
+	///*@TEST OK*/ TestMatrix(pop.fRefMatrixSize, pop.fRefMatrix);
 
 	//Inicjacja Osobników
 	pop.mInitializeMembers();
 	sort(pop.fPopulation.begin(), pop.fPopulation.end(), fCompare);
 		
 	///*@TEST OK*/ TestPopulation(&pop.fPopulation);
-	///*@Test OK*/ TestOrder(&pop.fPopulation); 
+	/*@Test OK*/ TestOrder(&pop.fPopulation); 
 	
 
 	pop.mPrintMembers();
 	
-	for (int i = 0; i < NumberOfCycle; i++) {
-		ga.selection(&pop);
-		ga.crossing(&pop);
-		pop.mPrintMembers();
-	}
+	//for (int i = 0; i < NumberOfCycle; i++) {
+		//ga.selection(&pop);
+		//ga.crossing(&pop);
+		//pop.mPrintMembers();
+	//}
 	
 	//load.mLoadMatrix();
 	system("pause");

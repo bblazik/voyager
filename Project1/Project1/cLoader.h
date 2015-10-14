@@ -1,7 +1,8 @@
 #pragma once
 #include <fstream>
 #include <iostream>
-#include <string>s
+#include <string>
+#include <limits.h>
 using namespace std;
 
 class cLoader
@@ -25,10 +26,10 @@ public:
 				for (int j = 0; j < size; j++)
 				{	
 					myfile >> ary[i][j];
-					if(ary[i][j] == 0)
-						ary[i][j] = numeric_limits<int>::infinity();
+					if(ary[i][j] == -1)
+						ary[i][j] = numeric_limits<int>::max();
 					
-					//@TEST cout << ary[i][j]<< endl;
+					///*@TEST*/ cout << ary[i][j]<< endl;
 				}
 
 			return ary;

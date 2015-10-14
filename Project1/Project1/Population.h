@@ -22,6 +22,7 @@ public:
 	cMember fBestMemberRef;
 	vector <cMember*> fPopulation;
 	vector <bool> OrderFlag;
+	
 
 
 	void mDrawMembers() {
@@ -29,16 +30,11 @@ public:
 		for each (cMember *m in fPopulation) {
 			for (int i = 0; i < fRefMatrixSize; i++) {
 				int val = 0;
-				do {
-					val = rand() % fRefMatrixSize;
-				} while (OrderFlag[val] != true);
-				
-				//cout << val << " ";
-				m->fOrder[i] = val;
-				OrderFlag[val] = false;	
+				val = rand() % m->OrderPosibilities.size();
+				m->fOrder[i] = m->OrderPosibilities[val];
+				m->OrderPosibilities.erase(m->OrderPosibilities.begin() + val, m->OrderPosibilities.begin() + val + 1);
+				//OrderFlag[val] = false;	
 			}
-			OrderFlag = setFlag(OrderFlag, true);
-			//mSumLength(*&m);
 			m->mSumLength(fRefMatrix);
 			//cout << m.fLengeth<<endl;
 			//cout<<"iii: "<< OrderFlag[0] << endl;
@@ -75,9 +71,12 @@ public:
 			fPopulation.push_back(new cMember(i, fRefMatrixSize));
 			
 		}
-		for (int i = 0; i < fRefMatrixSize; i++) {
-			OrderFlag.push_back(true);
+		for each (cMember *m in fPopulation){
+			for (int i = 0; i < fRefMatrixSize; i++) 
+				m->OrderPosibilities.push_back(i);
 		}
+		
+
 		mDrawMembers();
 		mChoseBestMember();
 
