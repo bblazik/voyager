@@ -16,8 +16,28 @@ public:
 	int fCrossingRate;
 
 	void selection(Population *p) {
-		// ranking method
-		p->mRemoveHalf();
+		// method turnament
+		const int s = 3; // group size;
+		
+		vector <cMember*> TournamentResult;
+
+		for (int j = 0; j < p->fPopSize / 2; j++) {
+			//Dodaj do grup turniejowych
+			vector <cMember*> TournamentGroup;
+			for (int i = 0; i < s; i++) {
+				TournamentGroup.push_back(p->fPopulation[rand() % p->fPopulation.size()]);
+			}
+			// Wybierz najlepszego
+			cMember* tmp = TournamentGroup[0];
+			for (int i = 1; i < s; i++) {
+				if (tmp->fLengeth > TournamentGroup[i]->fLengeth)
+					tmp = TournamentGroup[i];
+			}
+			TournamentResult.push_back(tmp);
+		}
+		//p->mRemoveHalf();
+		//p->mAddNew();
+		p->fPopulation = TournamentResult;
 		p->mAddNew();
 	}
 	void crossing(Population *p) {
@@ -25,20 +45,50 @@ public:
 
 		//p->mAddNew();
 		//Dla wszystkich osobnikow
-		for (int i = 0; i < p->fPopSize/2 - 1; i++) {
-			// wylosuj liczbe podzialu
-			int l = 1;//rand() % p->fRefMatrixSize;
-			for (int j = 0; j < l; j++) {
-				// Wez kolejnosc z pierwszego osobnika
-				p->fPopulation[i + p->fPopSize / 2]->fOrder[j] = p->fPopulation[i]->fOrder[j];
-				p->fPopulation[i + 1 + p->fPopSize / 2]->fOrder[j] = p->fPopulation[i + 1]->fOrder[j];
-			}
-			for (int k = l; k < p->fPopSize/2 - 1; k++) {
-				//Wez kolejnosc z drugiego osobnika
-				p->fPopulation[i + p->fPopSize / 2]->fOrder[k] = p->fPopulation[i + 1]->fOrder[k];
-				p->fPopulation[i + 1 + p->fPopSize / 2]->fOrder[k] = p->fPopulation[i]->fOrder[k];
+		
+		for (int i = 0; i < p->fPopSize/2 - 1; i+=2) {
+			if (rand() % 100 < fCrossingRate) {
+				// wylosuj liczbe podzialu
+				int l;
+				do {
+						l = rand() % p->fRefMatrixSize;
+				}while (l==0 || l == p->fRefMatrixSize);
+				for (int j = 0; j < l; j++) {
+					// Wez kolejnosc z pierwszego osobnika
+					p->fPopulation[i + p->fPopSize / 2]->fOrder[j] = p->fPopulation[i]->fOrder[j];
+					p->fPopulation[i + 1 + p->fPopSize / 2]->fOrder[j] = p->fPopulation[i + 1]->fOrder[j];
+				}
+				for (int k = l; k < p->fRefMatrixSize ; k++) {
+					//Wez kolejnosc z drugiego osobnika
+					p->fPopulation[i + p->fPopSize / 2]->fOrder[k] = p->fPopulation[i + 1]->fOrder[k];
+					p->fPopulation[i + 1 + p->fPopSize / 2]->fOrder[k] = p->fPopulation[i]->fOrder[k];
+				}
+				/*
+				cout << "Parent1: ";
+				for (int k = 0; k < p->fRefMatrixSize; k++) {
+					cout << p->fPopulation[i]->fOrder[k];
+				}
+				cout << endl;
+				cout << "Parent2: ";
+				for (int k = 0; k < p->fRefMatrixSize; k++) {
+					cout << p->fPopulation[i + 1]->fOrder[k];
+				}
+				cout << endl;
+
+				cout << "Osobnik1: ";
+				for (int k = 0; k < p->fRefMatrixSize; k++) {
+					cout << p->fPopulation[i + p->fPopSize / 2]->fOrder[k];
+				}
+				cout << endl;
+				cout << "Osobnik2: ";
+				for (int k = 0; k < p->fRefMatrixSize; k++) {
+					cout << p->fPopulation[i + 1 + p->fPopSize / 2]->fOrder[k];
+				}
+				cout << endl;
+				*/
 			}
 		}
+
 
 		//find doubles
 		//dla kazdego z nowo powstalych
@@ -73,7 +123,7 @@ public:
 		srand(time(NULL));
 		
 		for (int i = p->fPopSize / 2; i < p->fRefMatrixSize; i++) {
-			if ((rand() % 100 + 1) > fMutationRate) {
+			if ((rand() % 100) < fMutationRate) {
 				int l1 = rand() % p->fRefMatrixSize;
 				int l2 ;
 				do {

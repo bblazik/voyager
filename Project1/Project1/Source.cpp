@@ -38,9 +38,9 @@ void TestPopulation(vector<cMember*> *v){
 int main() {
 
 	const int MembersAmount = 12;
-	const int MutationRate = 10;
+	const int MutationRate = 30;
 	const int CrossingRate = 75;
-	const int NumberOfCycle = 10;
+	const int NumberOfCycle = 20;
 
 	cLoader load;
 	Population pop;
@@ -60,7 +60,7 @@ int main() {
 	sort(pop.fPopulation.begin(), pop.fPopulation.end(), fCompare);
 		
 	///*@TEST OK*/ TestPopulation(&pop.fPopulation);
-	/*@Test OK*/ TestOrder(&pop.fPopulation); 
+	///*@Test OK*/ TestOrder(&pop.fPopulation); 
 	
 
 	pop.mPrintMembers();
