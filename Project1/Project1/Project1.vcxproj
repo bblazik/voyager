@@ -74,9 +74,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>D:\repos\voyager\Project1\Project1\include_cpp</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;libxl.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -124,10 +126,23 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cExcel.h" />
     <ClInclude Include="cGA.h" />
     <ClInclude Include="cLoader.h" />
     <ClInclude Include="cMember.h" />
+    <ClInclude Include="include_cpp\enum.h" />
+    <ClInclude Include="include_cpp\IBookT.h" />
+    <ClInclude Include="include_cpp\IFontT.h" />
+    <ClInclude Include="include_cpp\IFormatT.h" />
+    <ClInclude Include="include_cpp\ISheetT.h" />
+    <ClInclude Include="include_cpp\libxl.h" />
+    <ClInclude Include="include_cpp\setup.h" />
+    <ClInclude Include="libxl.h" />
     <ClInclude Include="Population.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Project1.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

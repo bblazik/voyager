@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Excel">
+      <UniqueIdentifier>{618e8338-3211-4acf-b2ce-2c5a66ccc593}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -41,5 +44,40 @@
     <ClInclude Include="cGA.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cExcel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include_cpp\setup.h">
+      <Filter>Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="include_cpp\libxl.h">
+      <Filter>Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="libxl.h">
+      <Filter>Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="include_cpp\ISheetT.h">
+      <Filter>Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="include_cpp\IFormatT.h">
+      <Filter>Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="include_cpp\IFontT.h">
+      <Filter>Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="include_cpp\IBookT.h">
+      <Filter>Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="include_cpp\enum.h">
+      <Filter>Excel</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Project1.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

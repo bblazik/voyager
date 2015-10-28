@@ -9,50 +9,64 @@ using namespace std;
 class cGA
 {
 public:
-	cGA(int cross, int mutate) { fCrossingRate = cross; fMutationRate = mutate; };
+	cGA(int cross, int mutate, int size) { fCrossingRate = cross; fMutationRate = mutate; fGroupSize = size; };
 	~cGA() {};
 
 	int fMutationRate;
 	int fCrossingRate;
+	int fGroupSize;
 
 	void selection(Population *p) {
 		// method turnament
-		const int s = 3; // group size;
-		
+		srand(time(NULL));
+
 		vector <cMember*> TournamentResult;
 
-		for (int j = 0; j < p->fPopSize / 2; j++) {
+		for (int j = 0; j < p->fPopulation.size() / 2; j++) {
 			//Dodaj do grup turniejowych
 			vector <cMember*> TournamentGroup;
-			for (int i = 0; i < s; i++) {
-				TournamentGroup.push_back(p->fPopulation[rand() % p->fPopulation.size()]);
+			for (int i = 0; i < fGroupSize; i++) {
+				int temp = rand() % p->fPopulation.size();
+				TournamentGroup.push_back(p->fPopulation[temp]);
+
+				//Bez zwracania
+				//p->fPopulation.erase(p->fPopulation.begin() + temp, p->fPopulation.begin() + temp + 1);
 			}
 			// Wybierz najlepszego
 			cMember* tmp = TournamentGroup[0];
-			for (int i = 1; i < s; i++) {
+			for (int i = 1; i < fGroupSize; i++) {
 				if (tmp->fLengeth > TournamentGroup[i]->fLengeth)
 					tmp = TournamentGroup[i];
 			}
 			TournamentResult.push_back(tmp);
 		}
-		//p->mRemoveHalf();
-		//p->mAddNew();
-		p->fPopulation = TournamentResult;
+		// Przypisz wybrane osobniki do nowej populacji
+		p->fPopulation.clear();
+		p->fPopulation = std::move(TournamentResult);
+
 		p->mAddNew();
 	}
 	void crossing(Population *p) {
 		srand(time(NULL));
 
+		// dodaj osobniki do ktorych bedziemy przypisywac wyniki krzyzowania
 		//p->mAddNew();
 		//Dla wszystkich osobnikow
-		
-		for (int i = 0; i < p->fPopSize/2 - 1; i+=2) {
+
+		for (int i = 0; i < p->fPopSize / 2 - 1; i += 2) {
 			if (rand() % 100 < fCrossingRate) {
 				// wylosuj liczbe podzialu
-				int l;
+				int l, k;
 				do {
-						l = rand() % p->fRefMatrixSize;
-				}while (l==0 || l == p->fRefMatrixSize);
+					l = rand() % p->fRefMatrixSize;
+				} while (l == 0 || l == p->fRefMatrixSize);
+
+				do {
+					k = rand() % p->fRefMatrixSize;
+				} while (k == 0 || k == p->fRefMatrixSize);
+
+				// krzy¿owanie jednopunktowe z naprawianiem. 
+				/*
 				for (int j = 0; j < l; j++) {
 					// Wez kolejnosc z pierwszego osobnika
 					p->fPopulation[i + p->fPopSize / 2]->fOrder[j] = p->fPopulation[i]->fOrder[j];
@@ -63,37 +77,54 @@ public:
 					p->fPopulation[i + p->fPopSize / 2]->fOrder[k] = p->fPopulation[i + 1]->fOrder[k];
 					p->fPopulation[i + 1 + p->fPopSize / 2]->fOrder[k] = p->fPopulation[i]->fOrder[k];
 				}
-				/*
-				cout << "Parent1: ";
-				for (int k = 0; k < p->fRefMatrixSize; k++) {
-					cout << p->fPopulation[i]->fOrder[k];
-				}
-				cout << endl;
-				cout << "Parent2: ";
-				for (int k = 0; k < p->fRefMatrixSize; k++) {
-					cout << p->fPopulation[i + 1]->fOrder[k];
-				}
-				cout << endl;
 
-				cout << "Osobnik1: ";
-				for (int k = 0; k < p->fRefMatrixSize; k++) {
-					cout << p->fPopulation[i + p->fPopSize / 2]->fOrder[k];
+				//*/
+				for (int j = l>k? k:l ; j < (l>k?l:k); j++) {
+					// Wez kolejnosc z pierwszego osobnika
+					p->fPopulation[i + p->fPopSize / 2]->fOrder[j] = p->fPopulation[i]->fOrder[j];
+					p->fPopulation[i + 1 + p->fPopSize / 2]->fOrder[j] = p->fPopulation[i + 1]->fOrder[j];
 				}
-				cout << endl;
-				cout << "Osobnik2: ";
-				for (int k = 0; k < p->fRefMatrixSize; k++) {
-					cout << p->fPopulation[i + 1 + p->fPopSize / 2]->fOrder[k];
+
+				// Naprawianie OX
+				///*
+				for (int x = 0; x < p->fRefMatrixSize; x++) {
+
+					if (p->fPopulation[i + p->fPopSize / 2]->fOrder[x] == -1) {
+						for (int y = 0; y < p->fRefMatrixSize; y++) {
+							if (!(p->isIn(p->fPopulation[i + p->fPopSize / 2]->fOrder, p->fPopulation[i + 1]->fOrder[y]))) {
+								p->fPopulation[i + p->fPopSize / 2]->fOrder[x] = p->fPopulation[i + 1]->fOrder[y];
+								break;
+							}
+						}
+					}
 				}
-				cout << endl;
-				*/
+				
+				for (int x = 0; x < p->fRefMatrixSize; x++) {
+					if (p->fPopulation[i + 1 + p->fPopSize / 2]->fOrder[x] == -1){
+						for (int y = 0; y < p->fRefMatrixSize; y++) {
+							if (!(p->isIn(p->fPopulation[i +1+ p->fPopSize / 2]->fOrder, p->fPopulation[i]->fOrder[y]))) {
+								p->fPopulation[i +1+ p->fPopSize / 2]->fOrder[x] = p->fPopulation[i]->fOrder[y];
+								break;
+							}
+						}
+					}
+				}//*/
+
+			}
+			else {
+				p->fPopulation[i + p->fPopSize / 2]->fOrder = p->fPopulation[i]->fOrder;
+				///cout << "\nPo tym jest bl¹d ?\n";
+				p->fPopulation[i + 1 + p->fPopSize / 2]->fOrder = p->fPopulation[i + 1]->fOrder;
 			}
 		}
 
 
+
+
 		//find doubles
 		//dla kazdego z nowo powstalych
-
-		for (int i = p->fPopSize / 2 ; i < p->fPopSize ; i++) {
+/*Naprawianie dla jednopunktowego z naprawianiem.
+		for (int i = p->fPopSize / 2; i < p->fPopSize; i++) {
 			for (int x = 0; x < p->fRefMatrixSize; x++)
 			{
 				if (find(p->fPopulation[i]->OrderPosibilities.begin(), p->fPopulation[i]->OrderPosibilities.end(), p->fPopulation[i]->fOrder[x]) != p->fPopulation[i]->OrderPosibilities.end()) {
@@ -102,27 +133,33 @@ public:
 				}
 				else {
 					//cout << "znalazlem: " << p->fPopulation[i]->fOrder[x];
-					p->fPopulation[i]->fOrder[x] = -1;	
+					p->fPopulation[i]->fOrder[x] = -1;
 				}
 			}
-			for (int x = 0; x < p->fRefMatrixSize; x++) {
-		
+			//for (int x = 0; x < p->fRefMatrixSize; x++) {
+				/Losowe naprawianie
 				if (p->fPopulation[i]->fOrder[x] == -1) {
 					//Losuj z mozliwosci ktore zostaly;
 					int tmp = rand() % p->fPopulation[i]->OrderPosibilities.size();
 					p->fPopulation[i]->fOrder[x] = p->fPopulation[i]->OrderPosibilities[tmp];
-					p->fPopulation[i]->OrderPosibilities.erase(p->fPopulation[i]->OrderPosibilities.begin()+tmp, p->fPopulation[i]->OrderPosibilities.begin() + tmp + 1);
+					p->fPopulation[i]->OrderPosibilities.erase(p->fPopulation[i]->OrderPosibilities.begin() + tmp, p->fPopulation[i]->OrderPosibilities.begin() + tmp + 1);
 				}
-			}
+
+
+			//}
 		}
+	*/
+
 		//sprawdz czy order sie powtarza w order posibilities 
 		//dodaj if.
 
 	}
+	
+
 	void mutation(Population *p) {
 		srand(time(NULL));
 		
-		for (int i = p->fPopSize / 2; i < p->fRefMatrixSize; i++) {
+		for (int i = p->fPopSize / 2; i < p->fPopSize; i++) {
 			if ((rand() % 100) < fMutationRate) {
 				int l1 = rand() % p->fRefMatrixSize;
 				int l2 ;

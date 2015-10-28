@@ -10,7 +10,7 @@ class cMember
 public:
 	cMember();
 	cMember(int tId, int s);
-	~cMember(); 
+	~cMember();
 
 	int fId;
 	float fLengeth;

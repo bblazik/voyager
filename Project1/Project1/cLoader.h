@@ -13,7 +13,7 @@ public:
 	int size;
 
 	int** mLoadMatrix() {
-		std::fstream myfile("D:\\Matrix.txt", std::ios_base::in);
+		std::fstream myfile("D:\\Matrix4.txt", std::ios_base::in);
 		if (myfile.is_open()) {
 			
 			myfile >> size;

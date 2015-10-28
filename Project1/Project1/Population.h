@@ -14,12 +14,16 @@ public:
 	Population();
 	Population::Population(int Size);
 
-	~Population();
+	//~Population();
 
 	int fPopSize;
 	int **fRefMatrix;
 	int fRefMatrixSize;
-	cMember fBestMemberRef;
+	
+	float fMaxMember;
+	float fAvarangeMember;
+	float fMinMember;
+
 	vector <cMember*> fPopulation;
 	vector <bool> OrderFlag;
 	
@@ -47,18 +51,20 @@ public:
 		}
 		return v;
 	}
-	
+	/*
 	void mChoseBestMember() {
 		for each (cMember *m in fPopulation) {
 			if (m->fLengeth < fBestMemberRef.fLengeth)
 				fBestMemberRef.fLengeth = m->fLengeth;
 		}
 	}
+	*/
 
 
 
-	void mPrintMembers() {
+	void mPrintMembers(std::string m) {
 		cout << "\n\n -------------Wypisuje wszystkich: -----------\n";
+		cout << "\n" << m << endl;
 		for each (cMember * m in fPopulation){
 			cout << m->fLengeth << endl;
 		}
@@ -73,7 +79,7 @@ public:
 		}
 
 		mDrawMembers();
-		mChoseBestMember();
+		//mChoseBestMember();
 
 		
 		//mPrintMembers();
@@ -90,5 +96,42 @@ public:
 			fPopulation.push_back(new cMember(i, fRefMatrixSize));
 		}
 	}
+
+	bool isIn(vector<int> v, int l) {
+		for (int i = 0; i < v.size(); i++) {
+			if (v[i] == l) { return true; }
+		}
+		return false;
+	};
+
+	void mFindMax() {
+		fMaxMember = fPopulation[0]->fLengeth;
+		for each(cMember * m in fPopulation) {
+			if (m->fLengeth > fMaxMember)
+				fMaxMember = m->fLengeth;
+		}
+	}
+
+	void mFindMin() {
+		fMinMember = fPopulation[0]->fLengeth;
+		for each(cMember * m in fPopulation) {
+			if (m->fLengeth < fMinMember)
+				fMinMember = m->fLengeth;
+		}
+	}
+
+	void mFindAvarange() {
+		fAvarangeMember = 0;
+
+		fAvarangeMember = fPopulation[0]->fLengeth;
+		for each(cMember * m in fPopulation) {
+				fAvarangeMember += m->fLengeth;
+		}
+		fAvarangeMember /= fPopSize;
+	}
+	void mPrint() {
+		cout << "Max: " << fMaxMember << " Avarange: " << fAvarangeMember << " Min: " << fMinMember << endl;
+	}
+
 };
 

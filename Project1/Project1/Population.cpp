@@ -12,7 +12,8 @@ Population::Population(int Size)
 
 }
 
-
+/*
 Population::~Population()
 {
 }
+*/
