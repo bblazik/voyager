@@ -35,67 +35,66 @@ void TestPopulation(vector<cMember*> *v){
 }
 
 
+
+
+
 int main() {
 
+	//cout << countLenght(0, 2, 0, 0)<< endl;
+	//parser();
+	
+	
+	
 	//Mutacja -- wiêksza mutacja to 
-	//Krzy¿owanie -- 
-	int MembersAmount = 100;
-	int MutationRate = 70;
-	int CrossingRate = 80;
-	int NumberOfCycle = 100;
-	int GroupSize = 10;
+	//Krzy¿owanie --
+	for (int mat = 6; mat <= 6; mat++)
+	{
+		cLoader load("D:\\Matrix" + std::to_string(mat) + string(".txt"));
 
-	cLoader load;
-	Population pop;
-	cGA ga(CrossingRate, MutationRate, GroupSize);
-	string temp = "Badania_" + string("MA_") +std::to_string(MembersAmount) + string("MR_") + std::to_string(MutationRate) + string("CR_") + std::to_string(CrossingRate) + string("NoC_") + std::to_string(NumberOfCycle) + string("GS_") + std::to_string(GroupSize)+ string(".xls");
-	//cExcel x(temp)
-	
-	cExcel x;
-	//Wype³niamy Tablice referencji
-	pop.fRefMatrix = load.mLoadMatrix();
+		int MembersAmount = 100;
+		for (MembersAmount; MembersAmount <=100; MembersAmount *= 10)
+		{
+			int MutationRate = 5;
+			for (MutationRate; MutationRate <= 5; MutationRate -= 30)
+			{
+				int CrossingRate = 80;
+				for (CrossingRate; CrossingRate <= 80; CrossingRate += 30)
+				{
+					int NumberOfCycle = 1000;
+					for (NumberOfCycle; NumberOfCycle <= 1000; NumberOfCycle *= 10)
+					{
+						int GroupSize = 5;
+						for (GroupSize; GroupSize <= 5; GroupSize += 5)
+						{
 
-	//Okreslanie wielkoœci macierzy oraz populacji
-	pop.fPopSize = MembersAmount;
-	pop.fRefMatrixSize = load.size;
 
-	///*@TEST OK*/ TestMatrix(pop.fRefMatrixSize, pop.fRefMatrix);
+							Population pop;
+							cGA ga(CrossingRate, MutationRate, GroupSize);
+							string temp = "Badania_banchmark" + std::to_string(mat) + string("-jedno") + string("MA_") + std::to_string(MembersAmount) + string("MR_") + std::to_string(MutationRate) + string("CR_") + std::to_string(CrossingRate) + string("NoC_") + std::to_string(NumberOfCycle) + string("GS_") + std::to_string(GroupSize) + string(".xls");
+							cExcel x;
+							pop.fRefMatrix = load.mLoadMatrix();
+							pop.fPopSize = MembersAmount;
+							pop.fRefMatrixSize = load.size;
+							pop.mInitializeMembers();
+							for (int i = 0; i < NumberOfCycle; i++) {
+								ga.selection(&pop);
+								ga.crossing(&pop);
+								ga.mutation(&pop);
+								ga.graduation(&pop);
 
-	//Inicjacja Osobników
-	pop.mInitializeMembers();
-	//sort(pop.fPopulation.begin(), pop.fPopulation.end(), fCompare);
-		
-	///*@TEST OK*/ TestPopulation(&pop.fPopulation);
-	///*@Test OK*/ TestOrder(&pop.fPopulation); 
-	
+								pop.mFindMax();
+								pop.mFindMin();
+								pop.mFindAvarange();
 
-	//pop.mPrintMembers("Stan poczatkowy");
-	
-	for (int i = 0; i < NumberOfCycle; i++) {
-		ga.selection(&pop);
-		//pop.mPrintMembers("After selection");
-		ga.crossing(&pop);
-		ga.graduation(&pop);
-		//pop.mPrintMembers("After crossing");
-		//TestOrder(&pop.fPopulation);
-		ga.mutation(&pop);
-		ga.graduation(&pop);
-		//sort(pop.fPopulation.begin(), pop.fPopulation.end(), fCompare);
-		//pop.mPrintMembers();
-		
-		pop.mFindMax();
-		pop.mFindMin();
-		pop.mFindAvarange();
-		
-		x.WriteNextOne(pop.fMaxMember, pop.fAvarangeMember, pop.fMinMember, i,temp);
-		//x.WriteNextOne();
-		//pop.mPrintMembers();
-		pop.mPrint();
+								x.WriteNextOne(pop.fMaxMember, pop.fAvarangeMember, pop.fMinMember, i, temp);
+								pop.mPrint();
+							}
+						}
+					}
+				}
+			}
+		}
 	}
-	//sort(pop.fPopulation.begin(), pop.fPopulation.end(), fCompare);
-	pop.mPrintMembers("Stan koncowy");
-	
-	//load.mLoadMatrix();
 	system("pause");
 }
 

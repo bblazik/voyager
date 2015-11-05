@@ -33,18 +33,28 @@ public:
 				//p->fPopulation.erase(p->fPopulation.begin() + temp, p->fPopulation.begin() + temp + 1);
 			}
 			// Wybierz najlepszego
-			cMember* tmp = TournamentGroup[0];
+			cMember *tmp = TournamentGroup[0];
 			for (int i = 1; i < fGroupSize; i++) {
 				if (tmp->fLengeth > TournamentGroup[i]->fLengeth)
 					tmp = TournamentGroup[i];
 			}
-			TournamentResult.push_back(tmp);
+			TournamentResult.push_back(new cMember(*tmp));
 		}
 		// Przypisz wybrane osobniki do nowej populacji
-		p->fPopulation.clear();
-		p->fPopulation = std::move(TournamentResult);
+		
+		p->ClearVector();
 
+		p->fPopulation = std::move(TournamentResult);
+		
+		/*
+		for (auto it = TournamentResult.begin(); it != TournamentResult.end(); ++it)
+		{
+			delete *it;
+		}
+		TournamentResult.clear();
+		*/
 		p->mAddNew();
+		
 	}
 	void crossing(Population *p) {
 		srand(time(NULL));
@@ -66,7 +76,7 @@ public:
 				} while (k == 0 || k == p->fRefMatrixSize);
 
 				// krzy¿owanie jednopunktowe z naprawianiem. 
-				/*
+				///*
 				for (int j = 0; j < l; j++) {
 					// Wez kolejnosc z pierwszego osobnika
 					p->fPopulation[i + p->fPopSize / 2]->fOrder[j] = p->fPopulation[i]->fOrder[j];
@@ -77,16 +87,20 @@ public:
 					p->fPopulation[i + p->fPopSize / 2]->fOrder[k] = p->fPopulation[i + 1]->fOrder[k];
 					p->fPopulation[i + 1 + p->fPopSize / 2]->fOrder[k] = p->fPopulation[i]->fOrder[k];
 				}
-
+				
 				//*/
+				/*
 				for (int j = l>k? k:l ; j < (l>k?l:k); j++) {
 					// Wez kolejnosc z pierwszego osobnika
 					p->fPopulation[i + p->fPopSize / 2]->fOrder[j] = p->fPopulation[i]->fOrder[j];
 					p->fPopulation[i + 1 + p->fPopSize / 2]->fOrder[j] = p->fPopulation[i + 1]->fOrder[j];
 				}
-
+				//*/
 				// Naprawianie OX
 				///*
+				///*
+
+				/*
 				for (int x = 0; x < p->fRefMatrixSize; x++) {
 
 					if (p->fPopulation[i + p->fPopSize / 2]->fOrder[x] == -1) {
@@ -123,7 +137,9 @@ public:
 
 		//find doubles
 		//dla kazdego z nowo powstalych
-/*Naprawianie dla jednopunktowego z naprawianiem.
+//Naprawianie dla jednopunktowego z naprawianiem.
+
+		///*
 		for (int i = p->fPopSize / 2; i < p->fPopSize; i++) {
 			for (int x = 0; x < p->fRefMatrixSize; x++)
 			{
@@ -136,19 +152,17 @@ public:
 					p->fPopulation[i]->fOrder[x] = -1;
 				}
 			}
-			//for (int x = 0; x < p->fRefMatrixSize; x++) {
-				/Losowe naprawianie
+			for (int x = 0; x < p->fRefMatrixSize; x++) {
+				//Losowe naprawianie
 				if (p->fPopulation[i]->fOrder[x] == -1) {
 					//Losuj z mozliwosci ktore zostaly;
 					int tmp = rand() % p->fPopulation[i]->OrderPosibilities.size();
 					p->fPopulation[i]->fOrder[x] = p->fPopulation[i]->OrderPosibilities[tmp];
 					p->fPopulation[i]->OrderPosibilities.erase(p->fPopulation[i]->OrderPosibilities.begin() + tmp, p->fPopulation[i]->OrderPosibilities.begin() + tmp + 1);
 				}
-
-
-			//}
+			}
 		}
-	*/
+	//*/
 
 		//sprawdz czy order sie powtarza w order posibilities 
 		//dodaj if.
@@ -160,17 +174,21 @@ public:
 		srand(time(NULL));
 		
 		for (int i = p->fPopSize / 2; i < p->fPopSize; i++) {
-			if ((rand() % 100) < fMutationRate) {
-				int l1 = rand() % p->fRefMatrixSize;
-				int l2 ;
-				do {
-					l2 = rand() % p->fRefMatrixSize;
-				} while (l2 == l1);
-				
-				//switch
-				int tmp = p->fPopulation[i]->fOrder[l1];
-				p->fPopulation[i]->fOrder[l1] = p->fPopulation[i]->fOrder[l2];
-				p->fPopulation[i]->fOrder[l2] = tmp;
+			for (int j = 0; j < p->fPopulation[i]->fOrder.size(); j++)
+			{
+				if ((rand() % 100) < fMutationRate) {
+
+					int l1 = j;//rand() % p->fRefMatrixSize;
+					int l2;
+					do {
+						l2 = rand() % p->fRefMatrixSize;
+					} while (l2 == l1);
+
+					//switch
+					int tmp = p->fPopulation[i]->fOrder[l1];
+					p->fPopulation[i]->fOrder[l1] = p->fPopulation[i]->fOrder[l2];
+					p->fPopulation[i]->fOrder[l2] = tmp;
+				}
 			}
 		}
 	}

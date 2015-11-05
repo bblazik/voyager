@@ -10,7 +10,17 @@ class cMember
 public:
 	cMember();
 	cMember(int tId, int s);
-	~cMember();
+	cMember(int fLeng, vector<int> fOm, vector<int> OP) {
+		fLengeth = fLeng;
+		fOrder = fOm;
+		OrderPosibilities = OP;
+	}
+
+	cMember(const cMember& rhs) {
+		fLengeth = rhs.fLengeth;
+		fOrder = rhs.fOrder;
+		OrderPosibilities = rhs.OrderPosibilities;
+	}
 
 	int fId;
 	float fLengeth;

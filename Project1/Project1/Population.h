@@ -60,7 +60,14 @@ public:
 	}
 	*/
 
-
+	void ClearVector() {
+	
+		for (auto it = fPopulation.begin(); it != fPopulation.end(); ++it)
+		{
+			delete *it;
+		}
+		fPopulation.clear();
+	}
 
 	void mPrintMembers(std::string m) {
 		cout << "\n\n -------------Wypisuje wszystkich: -----------\n";

@@ -22,9 +22,3 @@ cMember::cMember(int tId, int s)
 }
 
 
-cMember::~cMember()
-{
-	fOrder.clear();
-	OrderPosibilities.clear();
-	delete this;
-}
