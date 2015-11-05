@@ -29,8 +29,6 @@ public:
 					myfile >> ary[i][j];
 					if(ary[i][j] == -1)
 						ary[i][j] = numeric_limits<int>::max();
-					
-					///*@TEST*/ cout << ary[i][j]<< endl;
 				}
 
 			return ary;
@@ -43,15 +41,13 @@ public:
 		return round(sqrt((pow((x2 - x1), 2) + pow((y2 - y1), 2))));
 	}
 
-	void parser() {
-		std::fstream infile("D:\\parser.txt", std::ios_base::in);
-		std::fstream outfile("D:\\Matrix7.txt", std::ios_base::out);
+	void parser(string Input, string Output) {
+		std::fstream infile("D:\\" + Input + string(".txt"), std::ios_base::in);
+		std::fstream outfile("D:\\" + Output + string(".txt"), std::ios_base::out);
 		int ii, x, y;
 		string name;
 		int Optimumlength;
 		int size;
-
-
 
 		if (infile.is_open()) {
 

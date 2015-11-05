@@ -5,16 +5,17 @@
 #include <vector>
 #include <algorithm>
 
-
-
-
 class Population
 {
 public:
 	Population();
 	Population::Population(int Size);
-
-	//~Population();
+	Population(int PopSize, int **fRefMat, int RefMatsize) {
+		fPopSize = PopSize;
+		fRefMatrix = fRefMat;
+		fRefMatrixSize = RefMatsize;
+		mInitializeMembers();
+	}
 
 	int fPopSize;
 	int **fRefMatrix;
@@ -26,7 +27,6 @@ public:
 
 	vector <cMember*> fPopulation;
 	vector <bool> OrderFlag;
-	
 
 
 	void mDrawMembers() {
@@ -37,11 +37,8 @@ public:
 				val = rand() % m->OrderPosibilities.size();
 				m->fOrder[i] = m->OrderPosibilities[val];
 				m->OrderPosibilities.erase(m->OrderPosibilities.begin() + val, m->OrderPosibilities.begin() + val + 1);
-				//OrderFlag[val] = false;	
 			}
 			m->mSumLength(fRefMatrix);
-			//cout << m.fLengeth<<endl;
-			//cout<<"iii: "<< OrderFlag[0] << endl;
 		}
 	}
 		
@@ -81,16 +78,9 @@ public:
 		
 		
 		for (int i = 0; i < fPopSize; i++) {
-			fPopulation.push_back(new cMember(i, fRefMatrixSize));
-			
+			fPopulation.push_back(new cMember(i, fRefMatrixSize));	
 		}
-
 		mDrawMembers();
-		//mChoseBestMember();
-
-		
-		//mPrintMembers();
-		//@TEST cout << fPopulation.size();
 	}
 	
 	void mRemoveHalf() {

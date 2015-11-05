@@ -19,7 +19,6 @@ public:
 	void selection(Population *p) {
 		// method turnament
 		srand(time(NULL));
-
 		vector <cMember*> TournamentResult;
 
 		for (int j = 0; j < p->fPopulation.size() / 2; j++) {
@@ -43,16 +42,7 @@ public:
 		// Przypisz wybrane osobniki do nowej populacji
 		
 		p->ClearVector();
-
 		p->fPopulation = std::move(TournamentResult);
-		
-		/*
-		for (auto it = TournamentResult.begin(); it != TournamentResult.end(); ++it)
-		{
-			delete *it;
-		}
-		TournamentResult.clear();
-		*/
 		p->mAddNew();
 		
 	}
