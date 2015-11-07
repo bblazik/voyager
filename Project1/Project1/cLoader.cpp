@@ -6,7 +6,3 @@ cLoader::cLoader()
 {
 }
 
-
-cLoader::~cLoader()
-{
-}

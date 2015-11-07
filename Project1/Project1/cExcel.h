@@ -32,4 +32,17 @@ public:
 		}
 	}
 
+	void TabuWite(int best, int i) {
+		if (book)
+		{
+			if (sheet)
+			{
+				sheet->writeNum(i, 1, best);
+				book->save(name.c_str());
+			}
+
+		}
+	}
+	
+
 };

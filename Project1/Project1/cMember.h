@@ -28,6 +28,7 @@ public:
 	vector <int> OrderPosibilities;
 
 	void mSumLength(int **matrix) {
+		fLengeth = 0;
 		for (int i = 0; i < fOrder.size() - 1; i++) {
 			fLengeth += matrix[fOrder[i]] [fOrder[i+1]];
 		}

@@ -48,14 +48,16 @@ public:
 		}
 		return v;
 	}
-	/*
-	void mChoseBestMember() {
+
+	cMember mChoseBestMember() {
+		cMember* tmp = fPopulation[0];
 		for each (cMember *m in fPopulation) {
-			if (m->fLengeth < fBestMemberRef.fLengeth)
-				fBestMemberRef.fLengeth = m->fLengeth;
+			if (m->fLengeth < tmp->fLengeth)
+				tmp = m;
 		}
+		return cMember(*tmp);
 	}
-	*/
+	
 
 	void ClearVector() {
 	

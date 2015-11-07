@@ -74,6 +74,9 @@
     <ClInclude Include="include_cpp\enum.h">
       <Filter>Excel</Filter>
     </ClInclude>
+    <ClInclude Include="cTabu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Project1.rc">

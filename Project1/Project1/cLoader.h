@@ -10,9 +10,10 @@ class cLoader
 public:
 	cLoader();
 	cLoader(string s) { name = s; }
-	~cLoader();
+
 	int size;
 	string name;
+
 	int** mLoadMatrix() {
 		std::fstream myfile(name, std::ios_base::in);
 		if (myfile.is_open()) {
@@ -35,7 +36,6 @@ public:
 		}
 		else { cout << "Unable to open file"; return 0; };
 	}
-
 
 	float countLenght(float x1, float y1, float x2, float y2) {
 		return round(sqrt((pow((x2 - x1), 2) + pow((y2 - y1), 2))));

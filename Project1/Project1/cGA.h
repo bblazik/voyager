@@ -50,7 +50,6 @@ public:
 		srand(time(NULL));
 
 		// dodaj osobniki do ktorych bedziemy przypisywac wyniki krzyzowania
-		//p->mAddNew();
 		//Dla wszystkich osobnikow
 
 		for (int i = 0; i < p->fPopSize / 2 - 1; i += 2) {
@@ -122,23 +121,16 @@ public:
 			}
 		}
 
-
-
-
 		//find doubles
 		//dla kazdego z nowo powstalych
 //Naprawianie dla jednopunktowego z naprawianiem.
-
-		///*
 		for (int i = p->fPopSize / 2; i < p->fPopSize; i++) {
 			for (int x = 0; x < p->fRefMatrixSize; x++)
 			{
 				if (find(p->fPopulation[i]->OrderPosibilities.begin(), p->fPopulation[i]->OrderPosibilities.end(), p->fPopulation[i]->fOrder[x]) != p->fPopulation[i]->OrderPosibilities.end()) {
-					//cout << "znalazlem: " << p->fPopulation[i]->fOrder[x] << "wywalam: " << p->fPopulation[i]->OrderPosibilities.back() << endl;
 					p->fPopulation[i]->OrderPosibilities.erase(remove(p->fPopulation[i]->OrderPosibilities.begin(), p->fPopulation[i]->OrderPosibilities.end(), p->fPopulation[i]->fOrder[x]), p->fPopulation[i]->OrderPosibilities.end());
 				}
 				else {
-					//cout << "znalazlem: " << p->fPopulation[i]->fOrder[x];
 					p->fPopulation[i]->fOrder[x] = -1;
 				}
 			}
@@ -153,12 +145,7 @@ public:
 			}
 		}
 	//*/
-
-		//sprawdz czy order sie powtarza w order posibilities 
-		//dodaj if.
-
 	}
-	
 
 	void mutation(Population *p) {
 		srand(time(NULL));
@@ -188,7 +175,5 @@ public:
 			m->mSumLength(p->fRefMatrix);
 		}
 	}
-
-	
 };
 
