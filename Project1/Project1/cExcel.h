@@ -6,7 +6,7 @@ using namespace libxl;
 
 class cExcel{
 public:
-
+	cExcel() {};
 	cExcel(std::string name) {
 		book = xlCreateBook();
 		sheet = book->addSheet("Sheet3");

@@ -8,10 +8,11 @@ using namespace std;
 class cTabu {
 public:
 	cTabu() {}
-	cTabu(int MaxTabuSize, int neig, int stop) {
+	cTabu(int MaxTabuSize, int neig, int stop, int graf) {
 		TabuListSize = MaxTabuSize;
 		neighborhood = neig;
 		stopCondition = stop;
+		name = "Tabu_" + std::to_string(graf) + string("_TS") + std::to_string(MaxTabuSize) + string("_nieg_") + std::to_string(neig) + string("_stop_") + std::to_string(stop) + string(".xls");
 	}
 	vector <cMember*> TabuList;
 	
@@ -19,9 +20,10 @@ public:
 	int neighborhood;
 	int stopCondition;
 	cMember result;
+	string name;
 
-	void TabuSerch(Population *pop, cExcel x) {
-		
+	void TabuSerch(Population *pop) {
+		cExcel x(name);
 		cMember Best = pop->mChoseBestMember();
 		
 		srand(time(NULL));

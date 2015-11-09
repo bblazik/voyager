@@ -121,8 +121,6 @@ public:
 
 	void mFindAvarange() {
 		fAvarangeMember = 0;
-
-		fAvarangeMember = fPopulation[0]->fLengeth;
 		for each(cMember * m in fPopulation) {
 				fAvarangeMember += m->fLengeth;
 		}

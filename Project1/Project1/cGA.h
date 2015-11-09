@@ -3,18 +3,28 @@
 #include <iostream>
 #include "cMember.h"
 #include "Population.h"
+#include "cExcel.h"
 
 using namespace std;
 
 class cGA
 {
 public:
-	cGA(int cross, int mutate, int size) { fCrossingRate = cross; fMutationRate = mutate; fGroupSize = size; };
+	cGA(int cross, int mutate, int size, int graph, int MembersAmount, int NumberOfCycle) {
+		fCrossingRate = cross;
+		fMutationRate = mutate;
+		fGroupSize = size;
+		name = "Badania_banchmark" + std::to_string(graph) + string("-jedno") + string("MA_") + std::to_string(MembersAmount) + string("MR_") + std::to_string(fMutationRate) + string("CR_") + std::to_string(fCrossingRate) + string("NoC_") + std::to_string(NumberOfCycle) + string("GS_") + std::to_string(fGroupSize) + string(".xls");
+		this->NumberOfCycle = NumberOfCycle;
+		
+	};
 	~cGA() {};
 
 	int fMutationRate;
 	int fCrossingRate;
 	int fGroupSize;
+	string name;
+	int NumberOfCycle;
 
 	void selection(Population *p) {
 		// method turnament
@@ -146,7 +156,6 @@ public:
 		}
 	//*/
 	}
-
 	void mutation(Population *p) {
 		srand(time(NULL));
 		
@@ -155,7 +164,8 @@ public:
 			{
 				if ((rand() % 100) < fMutationRate) {
 
-					int l1 = j;//rand() % p->fRefMatrixSize;
+					int l1 = j;//
+					//int l1 = rand() % p->fRefMatrixSize;
 					int l2;
 					do {
 						l2 = rand() % p->fRefMatrixSize;
@@ -173,6 +183,22 @@ public:
 		for each (cMember *m in p->fPopulation) {
 			m->fLengeth = 0;
 			m->mSumLength(p->fRefMatrix);
+		}
+	}
+	void RunGA(Population pop) {
+		cExcel x(name);
+		for (int i = 0; i < NumberOfCycle; i++)
+		{
+			selection(&pop);
+			crossing(&pop);
+			mutation(&pop);
+			graduation(&pop);
+
+			pop.mFindMax();
+			pop.mFindMin();
+			pop.mFindAvarange();
+			x.WriteNextOne(pop.fMaxMember, pop.fAvarangeMember, pop.fMinMember, i);
+			pop.mPrint();
 		}
 	}
 };

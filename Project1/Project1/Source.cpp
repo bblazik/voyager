@@ -6,6 +6,7 @@
 #include "cGA.h"
 #include "cExcel.h"
 #include "cTabu.h"
+#include "cAenaling.h"
 using namespace std;
 
 bool fCompare(cMember* i, cMember* j) { return (i->fLengeth < j->fLengeth); }
@@ -34,25 +35,13 @@ void TestPopulation(vector<cMember*> *v){
 		cout << v->at(i)->fId;
 	}
 }
-void RunGA(cGA ga, cExcel x, Population pop, int i) {
-	ga.selection(&pop);
-	ga.crossing(&pop);
-	ga.mutation(&pop);
-	ga.graduation(&pop);
 
-	pop.mFindMax();
-	pop.mFindMin();
-	pop.mFindAvarange();
-
-	x.WriteNextOne(pop.fMaxMember, pop.fAvarangeMember, pop.fMinMember, i);
-	pop.mPrint();
-}
 
 
 
 int main() 
 {
-	for (int mat = 6; mat <= 6; mat++)
+	for (int mat = 7; mat <= 7; mat++)
 	{
 		cLoader load("D:\\Matrix" + std::to_string(mat) + string(".txt"));
 		
@@ -61,25 +50,24 @@ int main()
 		
 		//Members amount, matrix, size of matrix
 		Population pop(100, d, s);
+		Population pop2(100, d, s);
+		//Crossing rate mutation rate, group size, MembersAmount, NumberOfCycle
 		
-		//Crossing rate mutation rate, group size
-		
-		cGA ga(80, 5, 5);
-		
+		//cGA ga(80, 40, 2, mat, pop.fPopSize, 1000);
+		//ga.RunGA(pop);
+
+		//cGA ga2(90, 1, 5, mat, pop2.fPopSize, 1000);
+		//ga2.RunGA(pop2);
 		//Max tabu list size , Max candidats list size, stop condition  
-		cTabu t(100, 30, 10200);
-		cTabu t2(10, 300, 10200);
-
-		//string temp = "Badania_banchmark" + std::to_string(mat) + string("-jedno") + string("MA_") + std::to_string(MembersAmount) + string("MR_") + std::to_string(MutationRate) + string("CR_") + std::to_string(CrossingRate) + string("NoC_") + std::to_string(NumberOfCycle) + string("GS_") + std::to_string(GroupSize) + string(".xls");
-		string temp = "Tabu_100_30_12000.xls";
-		string temp2 = "Tabu_10_300_20000.xls";
-		cExcel x(temp);
-		cExcel x2(temp2);
+		cTabu t(30, 300, 10000, mat);
+		cTabu t2(10, 300, 10000, mat);
+		//cTabu t3(20, 300, 1000, mat);
+		//cAenaling a(10, 100, -20);
 		
-
-		t2.TabuSerch(&pop, x2);
-		t.TabuSerch(&pop, x );
-		
+		//t3.TabuSerch(&pop);
+		//t2.TabuSerch(&pop);
+		t2.TabuSerch(&pop);
+		//a.aenaling(&pop, x);
 
 		//for (int i = 0; i < NumberOfCycle; i++)
 			//RunGA(ga, x, pop, i);

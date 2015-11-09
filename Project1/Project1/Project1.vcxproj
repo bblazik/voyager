@@ -131,6 +131,7 @@
     <ClInclude Include="cLoader.h" />
     <ClInclude Include="cMember.h" />
     <ClInclude Include="cTabu.h" />
+    <ClInclude Include="cAenaling.h" />
     <ClInclude Include="include_cpp\enum.h" />
     <ClInclude Include="include_cpp\IBookT.h" />
     <ClInclude Include="include_cpp\IFontT.h" />
